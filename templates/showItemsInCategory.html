@@ -1,0 +1,20 @@
+{% extends "main.html" %}
+{% block content %}
+
+<div>
+    <h4> Showing Items in {{ category.name }}</h4>
+    <div class="scrolling">
+        <div class="list-group">
+            {% for item in category.items %}
+            <a href="{{url_for('showItem', user_id=item.user_id, item_slug=item.slug)}}">
+                <div class="text-secondary list-group-item my-1">
+                    {{ item.name }}
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock%}

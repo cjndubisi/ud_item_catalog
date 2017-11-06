@@ -1,0 +1,36 @@
+{% extends "main.html" %} {% block content %}
+<div class="row">
+    <div class="col-4">
+        <h4 class="ml-4">Categories</h4>
+        <div class="col-md-12">
+            <div class="list-group">
+                {% for category in categories %}
+                <a href="{{ url_for('showItemsInCategory', category_name=category.name) }}">
+                    <div class="list-group-item justify-content-between my-1">
+                        <strong> {{ category.name }} </strong>
+                        <span class="badge badge-default badge-pill"> {{category.items.count()}}</span>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="col-8">
+        <h4 class="ml-4">Latest Items</h4>
+        <div class="col-md-6">
+            <ul class="list-group">
+                {% for item in items %}
+                <li class="list-group-item">
+                    <a href="{{ url_for('showItem', user_id=item.user_id, item_slug=item.slug) }}">
+                        <strong> {{ item.name }}</strong>
+                    </a>
+                    <a class="text-secondary" href="{{ url_for('showItemsInCategory', category_name=item.category.name) }}">
+                        <span class="text-secondary"><em>({{ item.category.name }}) </em></span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "main.html" %}
+{% block content %}
+<div class="text-dark">
+	<h1 class="display-4">{{ item.name }}</h1>
+	<div class="p-2 bg-light rounded">
+		<p class="lead bg-light">{{ item.description }}</p>
+
+		<div class="d-flex justify-content-end">
+			{% if current_user.is_authenticated and current_user.get_id() == item.user_id %}
+			<a href="{{ url_for('deleteItem', user_id=item.user_id, item_slug=item.slug)}}">
+				<i class="fa fa-trash .text-danger" aria-hidden="true"></i>
+				<span class="text-danger">Delete</span>
+			</a>
+			<span class="mx-1"> | </span>
+			<a href="{{ url_for('updateItem', user_id=item.user_id, item_slug=item.slug)}}">
+				<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+				<span class="text-dark">Edit</span>
+			</a>
+			{% endif %}
+		</div>
+	</div>
+
+</div>
+{% endblock %}
