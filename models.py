@@ -50,7 +50,7 @@ class Item(Base):
     __tablename__ = 'item'
     id = Column(Integer, primary_key=True)
     category_id = Column(Integer, ForeignKey('category.id'))
-    description = Column(String(80), nullable=False)
+    description = Column(String, nullable=False)
     name = Column(String(32), index=True, nullable=False, unique=True)
     slug = Column(String(32), index=True, nullable=False, unique=True)
     user_id = Column(Integer, ForeignKey('user.id'))
