@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
+import os
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Boolean
 from sqlalchemy import create_engine, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 
 Base = declarative_base()
+db_url = os.getenv('SQLALCHEMY_DATABASE_URI', 'sqlite:///catalog.db')
 
 class User(Base):
     __tablename__ = 'user'
@@ -84,6 +86,6 @@ class Category(Base):
             'items': [i.serialize for i in self.items]
         }
 
-engine = create_engine('sqlite:///catalog.db')
+engine = create_engine(db_url)
 
 Base.metadata.create_all(engine)

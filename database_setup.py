@@ -1,8 +1,10 @@
+import os
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from models import User, Item, Category
 
-engine = create_engine('sqlite:///catalog.db')
+db_url = os.getenv('SQLALCHEMY_DATABASE_URI', 'sqlite:///catalog.db')
+engine = create_engine(db_url)
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
