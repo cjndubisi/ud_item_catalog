@@ -5,7 +5,7 @@ from flask_login import LoginManager, login_required, login_user, logout_user
 from flask import session as login_session, make_response
 from sqlalchemy import create_engine, asc, exc
 from sqlalchemy.orm import sessionmaker
-from models import Base, User, Category, Item
+from .models import Base, User, Category, Item
 from datetime import datetime
 from werkzeug.routing import RequestRedirect
 
@@ -14,19 +14,19 @@ import requests
 import functools
 import httplib2
 import redis
+import os
 
 from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
 
+db_url = os.getenv('SQLALCHEMY_DATABASE_URI', 'sqlite:///catalog.db')
+
 app = Flask(__name__)
 
-CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
+CLIENT_ID = json.loads(open('client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Item Catalog"
 
-
-
 # Connect to Database and create database session
-engine = create_engine('sqlite:///catalog.db')
+engine = create_engine(db_url)
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -55,7 +55,7 @@ def logout():
         session.add(user)
         session.commit()
         logout_user()
-    except: 
+    except:
         return redirect(url_for('showCatalog'))
 
     return redirect(url_for('showCatalog'))
@@ -105,7 +105,7 @@ def gconnect():
     if result['issued_to'] != CLIENT_ID:
         response = make_response(
             json.dumps("Token's client ID does not match app's."), 401)
-        print "Token's client ID does not match app's."
+        print ("Token's client ID does not match app's.")
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -180,10 +180,10 @@ def getUserID(email):
         return None
 
 
-# flask_login: callback to reload the user object       
+# flask_login: callback to reload the user object
 @login_manager.user_loader
 def load_user(userid):
-    try: 
+    try:
         return getUserInfo(userid)
     except:
         return None
@@ -363,3 +363,5 @@ def catalogJSON():
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     app.run(host="0.0.0.0", port=5000, debug=True)
+else:
+    app.run(debug=True)
