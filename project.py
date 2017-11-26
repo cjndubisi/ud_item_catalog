@@ -5,7 +5,7 @@ from flask_login import LoginManager, login_required, login_user, logout_user
 from flask import session as login_session, make_response
 from sqlalchemy import create_engine, asc, exc
 from sqlalchemy.orm import sessionmaker
-from .models import Base, User, Category, Item
+from models import Base, User, Category, Item
 from datetime import datetime
 from werkzeug.routing import RequestRedirect
 
