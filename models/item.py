@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from models import *
+from . import *
 
 class Item(Base):
     __tablename__ = 'item'

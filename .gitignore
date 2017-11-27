@@ -1,3 +1,6 @@
 *.db
 *.zip
 .DS_Store
+*.pyc
+models/__pycache__
+models/__pycache__
