@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
-from . import *
+from app import db
 
-class User(Base):
+class User(db.Model):
     __tablename__ = 'user'
 
-    id = Column(Integer, primary_key=True)
-    name = Column(String(250), nullable=False)
-    picture = Column(String)
-    email = Column(String(250), nullable=False)
-    authenticated = Column(Boolean, default=False)
-    date_created  = Column(DateTime,  default=func.current_timestamp())
-    date_modified = Column(DateTime,  default=func.current_timestamp(),
-                                       onupdate=func.current_timestamp())
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(250), nullable=False)
+    picture = db.Column(db.String)
+    email = db.Column(db.String(250), nullable=False)
+    authenticated = db.Column(db.Boolean, default=False)
+    date_created  = db.Column(db.DateTime,  default=db.func.current_timestamp())
+    date_modified = db.Column(db.DateTime,  default=db.func.current_timestamp(),
+                                       onupdate=db.func.current_timestamp())
     def is_active(self):
         """True, as all users are active."""
         return True

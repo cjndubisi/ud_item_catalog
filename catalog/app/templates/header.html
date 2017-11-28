@@ -9,11 +9,11 @@
 			<a class="nav-item nav-link p-2" href="{{url_for('newItem')}}">Add Item</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-item nav-link p-2 btn btn-danger" href="{{url_for('logout')}}" onClick="signOut();">Logout</a>
+			<a class="nav-item nav-link p-2 btn btn-danger" href="{{url_for('auth.logout')}}" onClick="signOut();">Logout</a>
 		</li>
 		{% else %}
 		<li class="nav-item">
-			<a class="btn btn-secondary" href="{{url_for('showLogin')}}"> Login </a>
+			<a class="btn btn-secondary" href="{{url_for('auth.showLogin')}}"> Login </a>
 		</li>
 		{% endif %}
 	</ul>
