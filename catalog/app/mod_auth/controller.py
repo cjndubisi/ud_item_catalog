@@ -5,18 +5,19 @@ from flask import render_template, session as login_session, make_response, url_
 from flask_login import LoginManager, login_required, login_user, logout_user
 from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
 
+import app
 from app.models import User
-from app import app, db
+from app import app as application, db
 
 import random, string, json, requests
 import os, httplib2
 
 CLIENT_ID = json.loads(
-    open(os.path.join(os.getcwd(), 'client_secrets.json'), 'r').read())['web']['client_id']
+    open(os.path.join(os.path.dirname(app.__file__), 'client_secrets.json'), 'r').read())['web']['client_id']
 
 # flask-login
 login_manager = LoginManager()
-login_manager.init_app(app)
+login_manager.init_app(application)
 login_manager.login_view = "showLogin"
 
 # Define the blueprint: 'auth'
