@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
-from app import app, db
-from app.models import User, Item, Category
+from catalog.app import app, db
+from catalog.app.models import User, Item, Category
 
 from flask import Blueprint, jsonify
 

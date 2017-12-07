@@ -5,9 +5,8 @@ from flask import render_template, session as login_session, make_response, url_
 from flask_login import LoginManager, login_required, login_user, logout_user
 from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
 
-import app
-from app.models import User
-from app import app as application, db
+from catalog.app.models import User
+from catalog.app import app as application, db
 
 import random, string, json, requests
 import os, httplib2
