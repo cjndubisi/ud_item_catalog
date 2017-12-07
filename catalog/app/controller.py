@@ -4,7 +4,7 @@ from catalog.app.models import Category, Item, User
 from flask import render_template, request, redirect, jsonify, url_for
 from flask_login import login_required
 from flask import session as login_session, make_response, Blueprint
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine, asc, exc
 from werkzeug.routing import RequestRedirect
 

@@ -1,7 +1,13 @@
+import sys
+
+
 import os
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
-from models import User, Item, Category
+
+# add catalog app as module to python
+from catalog.app.models import User, Item, Category
+
 
 db_url = os.getenv('SQLALCHEMY_DATABASE_URI', 'sqlite:///catalog.db')
 engine = create_engine(db_url)
