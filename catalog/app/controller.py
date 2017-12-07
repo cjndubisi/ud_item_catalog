@@ -1,5 +1,5 @@
-from app import app, db, auth_module
-from app.models import Category, Item, User
+from catalog.app import app, db, auth_module
+from catalog.app.models import Category, Item, User
 
 from flask import render_template, request, redirect, jsonify, url_for
 from flask_login import login_required
