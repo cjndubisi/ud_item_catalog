@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from catalog.app import db
+from app import db
 
 class Item(db.Model):
     __tablename__ = 'itedb.m'

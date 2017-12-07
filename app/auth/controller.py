@@ -2,38 +2,31 @@
 
 from flask import request, redirect
 from flask import render_template, session as login_session, make_response, url_for, Blueprint
-from flask_login import LoginManager, login_required, login_user, logout_user
 from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
-
-import catalog
-from catalog.app.models import User
-from catalog.app import app as application, db
+from flask_login import login_user
+from app.models import User
+from app import app, db, login_manager
 
 import random, string, json, requests
 import os, httplib2
 
 CLIENT_ID = json.loads(
-    open(os.path.join(application.config['BASE_DIR'], 'catalog', 'app', 'client_secrets.json'), 'r').read())['web']['client_id']
-
-# flask-login
-login_manager = LoginManager()
-login_manager.init_app(application)
-login_manager.login_view = "showLogin"
+    open(os.path.join(app.config['BASE_DIR'], 'client_secrets.json'), 'r').read())['web']['client_id']
 
 # Define the blueprint: 'auth'
-mod_auth = Blueprint('auth', __name__)
+auth = Blueprint('auth', __name__)
 
-@mod_auth.route('/login')
+@auth.route('/login')
 def showLogin():
 
     # Create anti-forgery state token
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
-                    for x in xrange(32))
+                    for x in range(32))
     login_session['state'] = state
     # return "The current session state is %s" % login_session['state']
     return render_template('login.html', STATE=state)
 
-@mod_auth.route('/logout')
+@auth.route('/logout')
 def logout():
     try:
         user = getUserInfo(login_session['user_id'])
@@ -43,11 +36,11 @@ def logout():
         db.session.commit()
         logout_user()
     except: 
-        return redirect(url_for('showCatalog'))
+        return redirect(url_for('catalog.showCatalog'))
 
-    return redirect(url_for('showCatalog'))
+    return redirect(url_for('catalog.showCatalog'))
 
-@mod_auth.route('/gconnect', methods=['POST'])
+@auth.route('/gconnect', methods=['POST'])
 def gconnect():
 
     # Validate state token
@@ -59,7 +52,7 @@ def gconnect():
     code = request.data
     try:
         # Upgrade the authorization code into a credentials object
-        oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
+        oauth_flow = flow_from_clientsecrets(os.path.join(app.config['BASE_DIR'], 'client_secrets.json'), scope='')
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
     except FlowExchangeError:
@@ -70,10 +63,14 @@ def gconnect():
 
     # Check that the access token is valid.
     access_token = credentials.access_token
+
     url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=%s'
            % access_token)
+
     h = httplib2.Http()
-    result = json.loads(h.request(url, 'GET')[1])
+    value = h.request(url, 'GET')
+
+    result = json.loads(h.request(url, 'GET')[1].decode('utf-8'))
     # If there was an error in the access token info, abort.
     if result.get('error') is not None:
         response = make_response(json.dumps(result.get('error')), 500)

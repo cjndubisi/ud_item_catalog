@@ -6,7 +6,7 @@
 
 	<button type="submit" class="btn btn-danger delete" id="submit" type="submit">
 	<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Delete</button>
-	<a class="btn btn-secondary" href = '{{url_for('showUserItems', user_id=item.user_id)}}'>
+	<a class="btn btn-secondary" href = '{{url_for('catalog.showUserItems', user_id=item.user_id)}}'>
 		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Cancel
 	</a>
 

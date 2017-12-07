@@ -10,9 +10,9 @@
         {% for item in items %}
         <li class="list-group-item">
             <span>
-                <a href="{{url_for('showItem', user_id=item.user_id, item_slug=item.slug)}}">
+                <a href="{{url_for('catalog.showItem', user_id=item.user_id, item_slug=item.slug)}}">
                     {{ item.name }}
-                <a href="{{url_for('showItemsInCategory', category_name=item.category.name)}}">
+                <a href="{{url_for('catalog.showItemsInCategory', category_name=item.category.name)}}">
                     ({{item.category.name}})
                 </a>
             </span>

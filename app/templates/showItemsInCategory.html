@@ -6,7 +6,7 @@
     <div class="scrolling">
         <div class="list-group">
             {% for item in category.items %}
-            <a href="{{url_for('showItem', user_id=item.user_id, item_slug=item.slug)}}">
+            <a href="{{url_for('catalog.showItem', user_id=item.user_id, item_slug=item.slug)}}">
                 <div class="text-secondary list-group-item my-1">
                     {{ item.name }}
                 </div>

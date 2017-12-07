@@ -1,25 +1,13 @@
-import sys
-
-
-import os
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine
+#!/usr/bin/python3
 
 # add catalog app as module to python
-from catalog.app.models import User, Item, Category
-
-
-db_url = os.getenv('SQLALCHEMY_DATABASE_URI', 'sqlite:///catalog.db')
-engine = create_engine(db_url)
-
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
-
+from app.models import User, Item, Category
+from app import db
 
 # dummy user
 user1 = User(name='Chijioke ndubisi', picture='', email='cjndubisi@gmail.com')
-session.add(user1)
-session.commit()
+db.session.add(user1)
+db.session.commit()
 
 # dummy categories
 categories = [
@@ -35,7 +23,7 @@ categories = [
 
 # add all categores
 for s in categories:
-	session.add(s)
+	db.session.add(s)
 
 # dummy items
 items = [
@@ -146,7 +134,7 @@ items = [
 
 # add all items
 for x in items:
-    session.add(x)
+    db.session.add(x)
 
 # comit changes
-session.commit()
+db.session.commit()

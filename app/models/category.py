@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from catalog.app import db
+from app import db
 from .item import Item
 
 class Category(db.Model):
