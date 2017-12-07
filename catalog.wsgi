@@ -3,5 +3,6 @@
 import sys, os
 
 # add catalog app as module to python
-sys.path.append(os.path.join(__file__, 'catalog'))
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 from app import app as application
